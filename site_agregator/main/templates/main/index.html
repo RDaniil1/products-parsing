@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="generator" content="Hugo 0.108.0">
-    <title>Apartment search</title>
+    <title>Product search</title>
 
     
 
@@ -96,44 +96,51 @@
       <div class="col-lg-6 col-md-8 mx-auto">
         <h1 class="fw-light">Product search engine</h1>
         <p class="lead text-muted">Search for best product on different sites</p>
+        <form action="" method="post">
+          {% csrf_token %}
           <div class="container">
-            <div class="align-left">
-              <input type="text" class="form-control" id="zip" placeholder="" required="">
-              <input id="searchElem" type="search" class="form-control" placeholder="Search..." aria-label="Search">
-            </div>
-            <div class="align-right">
-              <a id="findBtn" class="btn btn-primary my-2">Find</a>
-            </div>
+              <div class="align-left">
+                <!--<input type="text" class="form-control" id="zip" placeholder="" required="">-->
+                <input id="searchElem" name="search" type="search" class="form-control" placeholder="Search..." aria-label="Search">
+              </div>
+              <div class="align-right">
+                <button id="findBtn" class="btn btn-primary my-2">Find</button>
+              </div>
           </div>
+        </form>
       </div>
     </div>
   </section>
 
-  <div class="album py-5 bg-light">
+  {% if products.0.description %}
+
     <div class="container">
       <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
 
-        {%for product in products%}
+        {% for product in products %}
         <div class="col">
           <div class="card shadow-sm"> 
             <img src={{product.img_path}} alt="product" width="100%" height="100%">
             <title>Placeholder</title>
             <rect width="100%" height="100%" fill="#55595c"></rect>
-            <text x="50%" y="50%" fill="#eceeef" dy=".3em">{{product.name}}</text>
+            <text style="text-align:center;" x="50%" y="50%" fill="#eceeef" dy=".3em">
+              <b>{{ product.name }}</b>
+            </text>
             <div class="card-body">
-              <p class="card-text">{{product.description}}</p>
+              <p class="card-text">{{ product.description }}</p>
               <div class="d-flex justify-content-between align-items-center">
                 <button onclick="window.open('{{product.info_link}}','_blank');" type="button" class="btn btn-sm btn-outline-secondary">View</button>
-                <small>{{product.price}}</small>
+                <small>{{ product.price }}</small>
               </div>
             </div>
           </div>
         </div>
-        {%endfor%}
+        {% endfor %}
         
       </div>
     </div>
-  </div>
+
+  {% endif %}
 
 </main>
 </body></html>

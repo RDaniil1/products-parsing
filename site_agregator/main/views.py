@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from main.sites.avito import get_avito_products
-from main.product.product import Product
+from site_agregator.main.sites.product import Product
 from pprint import pprint
 
 

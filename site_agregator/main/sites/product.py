@@ -24,8 +24,6 @@ class Product:
 def download_images(products: list[Product]):
     image_folder_location = Path(__file__).parent / 'Product images'
 
-    # if image_folder_location.exists():
-    #     rmtree(image_folder_location)
     image_folder_location.mkdir(exist_ok=True)
 
     for i, product in enumerate(products):

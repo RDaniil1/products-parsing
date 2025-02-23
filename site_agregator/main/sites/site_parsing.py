@@ -22,19 +22,6 @@ def get_products(url: str, product_name: str, elements_pattern: str, town='all',
     user_agent = UserAgent(browsers=['chrome', 'edge'])
     proxy = get_random_proxy()
     ip, port = proxy.split(':')
-
-    # if _filter not in ['default', 'cheaper', 'expensive', 'date']:
-    #     return [Product()]
-    
-    # match _filter:
-    #     case 'default':
-    #         _filter = ''
-    #     case 'cheaper':
-    #         _filter = '1'
-    #     case 'expensive':
-    #         _filter = '2'
-    #     case 'date':
-    #         _filter = '104'
     
     firefox_options = Options()
     firefox_options.add_argument("--headless")
@@ -46,27 +33,12 @@ def get_products(url: str, product_name: str, elements_pattern: str, town='all',
     profile.set_preference("general.useragent.override", user_agent.random)
     
     driver = Firefox(options=firefox_options, firefox_profile=profile)
-
-    
     driver.get(url)
-
 
     elements_name = ['search', 'search_btn', 'name', 'price', 'description', 'info_link', 'gallery', 'image_link'] 
     element_dispatcher = dict(zip(elements_name, elements_pattern))
 
-    # element_dispatcher = {
-    #     'search' : "input[class='input-input-Zpzc1']",
-    #     'search_btn' : "button[class='desktop-8ydzks']",
-    #     'name' : "h3[class^='styles-module-root-TWVKW']",
-    #     'price' : "span[class='']",
-    #     'description' : "p[style^='-webkit-line-cla']",
-    #     'info_link' : "a[class='iva-item-sliderLink-uLz1v']",
-    #     'gallery' : "div[class='gallery-block-itemViewGallery-_Pfeg']",
-    #     'image_link' : "img[class^='photo-slider-image']"
-    # }
-
     driver.find_element(By.CSS_SELECTOR, element_dispatcher['search']).send_keys(product_name)
-
     driver.find_element(By.CSS_SELECTOR, element_dispatcher['search_btn']).click()
 
     product_data = []
@@ -90,7 +62,6 @@ def get_products(url: str, product_name: str, elements_pattern: str, town='all',
         products += [product]
 
     driver.close()
-
     return products
 
 if __name__ == '__main__':
